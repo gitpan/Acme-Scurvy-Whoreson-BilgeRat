@@ -12,11 +12,12 @@ sub new {
 	bless {
 		nouns => [
 			'bilge rat', 'whoreson', 'land-lubber',
-			'cur',  'swab'
+			'cur',  'swab', 'potvaliant'
 		],
 		adjectives => [
 			'scurvy', 'whoreson', 'lily-livered',
-			'black-spotted', 'grog-shy', 'cowardly'
+			'black-spotted', 'grog-shy', 'cowardly',
+                        'potvaliant'
 		],
 		grammars => [qw(
 			N

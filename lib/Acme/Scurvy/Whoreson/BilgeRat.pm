@@ -4,7 +4,10 @@ $VERSION = '1.0';
 
 use strict;
 use warnings;
-use overload '""' => \&stringify;
+use overload (
+	'""' => \&stringify,
+	fallback => 1
+);
 
 =head1 NAME
 
@@ -14,7 +17,7 @@ Acme::Scurvy::Whoreson::BilgeRat - multi-lingual insult generator
 
   use Acme::Scurvy::Whoreson::BilgeRat;
   
-  my $insultgenerator = Acme::Scurvy::Whoreson::Bilgerat->new(
+  my $insultgenerator = Acme::Scurvy::Whoreson::BilgeRat->new(
     language => 'pirate'
   );
   
@@ -52,7 +55,7 @@ sub new {
 	";
 	$@ && die("Bollocks! I can't find a language backend for '$params{language}'");
 	
-	$backend = eval "Acme::Scurvy::Whoreson::BilgeRat::Backend::$params{language}->new()";
+	$backend = "Acme::Scurvy::Whoreson::BilgeRat::Backend::$params{language}"->new();
 	($backend && $backend->isa("Acme::Scurvy::Whoreson::BilgeRat::Backend::$params{language}")) ||
 		die("For fuck's sake, the fucking backend's fucked");
 
@@ -61,7 +64,7 @@ sub new {
 
 sub stringify {
 	my $self = shift;
-	$self->generateinsult($self);
+	$self->generateinsult();
 }
 
 sub generateinsult {
@@ -87,7 +90,7 @@ So, on to the most complex part of all this, which thankfully isn't that
 complex.
 
 To create a plugin, you create a bog-standard module, whose name is
-Acme::Scurvy::Whoreson::Bilgerat::Backend::[your language name].  It should
+Acme::Scurvy::Whoreson::BilgeRat::Backend::[your language name].  It should
 be a subclass of A::S::W::B.  The constructor should return a blessed
 object and must be called new().  You then have two options:
 
